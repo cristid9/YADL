@@ -17,6 +17,12 @@ extern char* yytext;
 %%
 
 program
+    : block_content
+    | func_declaration
+    | func_definition
+    ;
+
+block_content
     : declarations
     | assignments
     ;
@@ -29,7 +35,6 @@ declarations
 declaration
     : var_declaration
     | const_declaration
-    | func_declaration
     ;
 
 value
@@ -86,6 +91,9 @@ func_arg_declaration
 func_declaration
     : DEFUNC ':' type ID_NAME '(' func_args_declarations ')' ';'
     ;
+
+func_definition
+    : DEFUNC ':' type ID_NAME '(' func_args_declarations ')' '=' '{' block_content '}';
 
 var_declaration
     : VAR ':' type init_or_id_list ';' { printf("%s var\n", $1);  } 

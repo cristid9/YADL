@@ -34,6 +34,8 @@ value_number ([0-9]*[.])?[0-9]+
 "/"                     { return '/'; }
 "("                     { return '('; }
 ")"                     { return ')'; }
+"{"                     { return '{'; }
+"}"                     { return '}'; }
 
 %%
 
