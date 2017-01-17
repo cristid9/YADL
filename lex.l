@@ -19,6 +19,13 @@ value_number ([0-9]*[.])?[0-9]+
 "true"                  { return VALUE_BOOL; }
 "false"                 { return VALUE_BOOL; }
 "defunc"                { return DEFUNC; }
+"for"                   { return FOR; }
+"while"                 { return WHILE; }
+"if"                    { return IF; }
+"class"                 { return CLASS; }
+"print"                 { return PRINT; }
+"sqrt"                  { return SQRT; }
+"pow"                   { return POW; }
 
 {value_number}          { return VALUE_NUMBER; }
 {value_string}          { return VALUE_STRING; }
@@ -36,6 +43,8 @@ value_number ([0-9]*[.])?[0-9]+
 ")"                     { return ')'; }
 "{"                     { return '{'; }
 "}"                     { return '}'; }
+"["                     { return '['; }
+"]"                     { return ']'; }
 
 "=="                    { return EQ; }
 "!="                    { return NEQ; }
@@ -49,9 +58,6 @@ value_number ([0-9]*[.])?[0-9]+
 
 "++"                    { return INC; }
 "--"                    { return DEC; }
-
-"for"                   { return FOR; }
-
 
 %%
 
