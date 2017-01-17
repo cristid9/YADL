@@ -7,6 +7,7 @@ extern char* yytext;
 
 %token VAR ID_NAME TYPE_STRING TYPE_BOOL TYPE_NUMBER
 %token CONST VALUE_STRING VALUE_BOOL VALUE_NUMBER
+%token DEFUNC
 
 %left '*' '/'
 %left '+' '-'
@@ -28,6 +29,7 @@ declarations
 declaration
     : var_declaration
     | const_declaration
+    | func_declaration
     ;
 
 value
@@ -72,11 +74,24 @@ assignments
     : init_list ';'
     ;
 
-var_declaration
-    : VAR ':' type init_or_id_list ';' { printf("%s booyah\n", $1);  } 
+func_args_declarations
+    : func_arg_declaration
+    | func_args_declarations ',' func_arg_declaration
     ;
 
-const_declaration: CONST ':' type init_list ';' {printf("koskos\n");}
+func_arg_declaration
+    : VAR ':' type ID_NAME
+    ;
+
+func_declaration
+    : DEFUNC ':' type ID_NAME '(' func_args_declarations ')' ';'
+    ;
+
+var_declaration
+    : VAR ':' type init_or_id_list ';' { printf("%s var\n", $1);  } 
+    ;
+
+const_declaration: CONST ':' type init_list ';' {printf("const\n");}
     ;
 
 type: TYPE_NUMBER 

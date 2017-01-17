@@ -18,6 +18,7 @@ value_number ([0-9]*[.])?[0-9]+
 "bool"                  { return TYPE_BOOL; }
 "true"                  { return VALUE_BOOL; }
 "false"                 { return VALUE_BOOL; }
+"defunc"                { return DEFUNC; }
 
 {value_number}          { return VALUE_NUMBER; }
 {value_string}          { return VALUE_STRING; }
