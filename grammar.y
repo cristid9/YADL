@@ -17,6 +17,7 @@ extern char* yytext;
 
 program
     : declarations
+    | assignments
     ;
 
 declarations
@@ -65,6 +66,10 @@ init_or_id
 init_or_id_list
     : init_or_id
     | init_or_id_list ',' init_or_id
+    ;
+
+assignments
+    : init_list ';'
     ;
 
 var_declaration
