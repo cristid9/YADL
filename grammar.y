@@ -8,8 +8,10 @@ extern char* yytext;
 %token VAR ID_NAME TYPE_STRING TYPE_BOOL TYPE_NUMBER
 %token CONST VALUE_STRING VALUE_BOOL VALUE_NUMBER
 
-%left '-' '+'
 %left '*' '/'
+%left '+' '-'
+
+%nonassoc UMINUS
 
 %%
 
@@ -30,11 +32,24 @@ declaration
 value
     : VALUE_BOOL
     | VALUE_STRING
+    ;
+
+arithmetic_expression
+    : arithmetic_expression '*' arithmetic_expression
+    | arithmetic_expression '/' arithmetic_expression
+    | arithmetic_expression '+' arithmetic_expression
+    | arithmetic_expression '-' arithmetic_expression
+    | '(' arithmetic_expression ')'
     | VALUE_NUMBER
+    ;
+   
+initializer
+    : value
+    | arithmetic_expression
     ;
 
 initialization
-    : ID_NAME '=' value
+    : ID_NAME '=' initializer
     ;
 
 init_list

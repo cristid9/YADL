@@ -7,7 +7,7 @@
 
 id_name [a-zA-Z]([a-zA-Z0-9])*
 value_string \"([a-zA-Z0-9*+z=])*\"
-value_number [+-]?([0-9]*[.])?[0-9]+
+value_number ([0-9]*[.])?[0-9]+
 
 %%
 
@@ -23,7 +23,6 @@ value_number [+-]?([0-9]*[.])?[0-9]+
 {value_string}          { return VALUE_STRING; }
 {id_name}               { return ID_NAME; }
 
-
 ","                     { return ','; }
 ":"                     { return ':'; }
 ";"                     { return ';'; }
@@ -34,7 +33,6 @@ value_number [+-]?([0-9]*[.])?[0-9]+
 "/"                     { return '/'; }
 "("                     { return '('; }
 ")"                     { return ')'; }
-
 
 %%
 
