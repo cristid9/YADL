@@ -37,5 +37,21 @@ value_number ([0-9]*[.])?[0-9]+
 "{"                     { return '{'; }
 "}"                     { return '}'; }
 
+"=="                    { return EQ; }
+"!="                    { return NEQ; }
+"<"                     { return LT; }
+">"                     { return GT; }
+"<="                    { return LTE; }
+">="                    { return GTE; }
+"&&"                    { return AND; }
+"||"                    { return OR; }
+"!"                     { return NOT; }
+
+"++"                    { return INC; }
+"--"                    { return DEC; }
+
+"for"                   { return FOR; }
+
+
 %%
 

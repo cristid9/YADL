@@ -9,10 +9,19 @@ extern char* yytext;
 %token CONST VALUE_STRING VALUE_BOOL VALUE_NUMBER
 %token DEFUNC
 
+%token EQ NEQ LT GT LTE GTE AND OR NOT  
+%token INC DEC 
+
+%token FOR
+
 %left '*' '/'
 %left '+' '-'
+%left '('
+%left EQ NEQ LT GT LTE GTE AND OR
 
+%nonassoc NOT
 %nonassoc UMINUS
+%nonassoc INC DEC
 
 %%
 
@@ -25,6 +34,7 @@ program
 block_content
     : declarations
     | assignments
+    | stmt_expression ';'
     ;
 
 declarations
@@ -40,6 +50,19 @@ declaration
 value
     : VALUE_BOOL
     | VALUE_STRING
+    ;
+
+increment_expression
+    : INC stmt_expression
+    | stmt_expression INC
+    | DEC stmt_expression
+    | stmt_expression DEC
+    | ID_NAME
+    ;
+
+stmt_expression
+    : increment_expression 
+    | init_list 
     ;
 
 arithmetic_expression
