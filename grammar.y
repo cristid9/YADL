@@ -1,5 +1,7 @@
 %{
-#include  <stdio.h>
+#include <stdio.h>
+#include <math.h>
+#include <string.h>
 extern FILE* yyin;
 extern char* yytext;
 
@@ -8,6 +10,8 @@ extern char* yytext;
 %token VAR ID_NAME TYPE_STRING TYPE_BOOL TYPE_NUMBER
 %token CONST VALUE_STRING VALUE_BOOL VALUE_NUMBER
 %token DEFUNC
+
+
 
 %token EQ NEQ LT GT LTE GTE AND OR NOT  
 %token INC DEC 
@@ -24,6 +28,23 @@ extern char* yytext;
 %nonassoc NOT
 %nonassoc UMINUS
 %nonassoc INC DEC
+
+%union {
+    double nVal;
+    char* sVal;
+    char* type;
+    int bVal;
+};
+
+%type <nVal> VALUE_NUMBER
+%type <sVal> VALUE_STRING
+%type <bVal> VALUE_BOOL
+%type <nVal> arithmetic_expression
+%type <nVal> std_func_args
+%type <nVal> std_sqrt
+%type <nVal> std_pow
+%type <nVal> ID_NAME
+%type <nVal> initializer
 
 %%
 
@@ -135,17 +156,17 @@ array_assignment
     ;
 
 arithmetic_expression
-    : arithmetic_expression '*' arithmetic_expression
-    | arithmetic_expression '/' arithmetic_expression
-    | arithmetic_expression '+' arithmetic_expression
-    | arithmetic_expression '-' arithmetic_expression
+    : arithmetic_expression '+' arithmetic_expression { $$ = $1 + $3; }
+    | arithmetic_expression '-' arithmetic_expression { $$ = $1 - $3; }
+    | arithmetic_expression '*' arithmetic_expression { $$ = $1 * $3; }
+    | arithmetic_expression '/' arithmetic_expression { $$ = $1 / $3; }
     | '(' arithmetic_expression ')'
     | VALUE_NUMBER
     ;
 
 std_funcs_list
-    : std_funcs
-    | std_funcs_list std_funcs
+    : std_funcs ';'
+    | std_funcs_list std_funcs ';'
     ;
 
 std_funcs
@@ -156,19 +177,21 @@ std_funcs
 
 std_func_args
     : arithmetic_expression
+    | std_pow
+    | std_sqrt
     | ID_NAME
     ;
 
 std_print
-    : PRINT '(' std_func_args ')' ';'
+    : PRINT '(' std_func_args ')' {   printf("%lf\n", $3); }
     ;
 
 std_pow
-    : POW '(' std_func_args ',' std_func_args ')' ';'
+    : POW '(' std_func_args ',' std_func_args ')' { $$ = pow($3, $5); }
     ;
 
 std_sqrt
-    : SQRT '(' std_func_args ')' ';'
+    : SQRT '(' std_func_args ')'             {  $$ = sqrt($3); }
     ;
 
 initializer
@@ -178,7 +201,7 @@ initializer
     ;
 
 initialization
-    : ID_NAME '=' initializer
+    : ID_NAME '=' initializer  {$1 = $3;}
     ;
 
 init_list
@@ -229,7 +252,7 @@ func_definitions
     ;
 
 var_declaration
-    : VAR ':' type init_or_id_list ';' { printf("%s var\n", $1);  } 
+    : VAR ':' type init_or_id_list ';' { printf("var\n" );  } 
     ;
 
 const_declaration: CONST ':' type init_list ';' {printf("const\n");}

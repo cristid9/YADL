@@ -16,8 +16,8 @@ value_number ([0-9]*[.])?[0-9]+
 "string"                { return TYPE_STRING; }
 "number"                { return TYPE_NUMBER; }
 "bool"                  { return TYPE_BOOL; }
-"true"                  { return VALUE_BOOL; }
-"false"                 { return VALUE_BOOL; }
+"true"                  { yylval.bVal = 1; return VALUE_BOOL; }
+"false"                 { yylval.bVal = 0; return VALUE_BOOL; }
 "defunc"                { return DEFUNC; }
 "for"                   { return FOR; }
 "while"                 { return WHILE; }
@@ -27,8 +27,8 @@ value_number ([0-9]*[.])?[0-9]+
 "sqrt"                  { return SQRT; }
 "pow"                   { return POW; }
 
-{value_number}          { return VALUE_NUMBER; }
-{value_string}          { return VALUE_STRING; }
+{value_number}          { yylval.nVal = atof(yytext);   return VALUE_NUMBER; }
+{value_string}          { yylval.sVal = strdup(yytext); return VALUE_STRING; }
 {id_name}               { return ID_NAME; }
 
 ","                     { return ','; }
