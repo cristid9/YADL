@@ -1,4 +1,4 @@
 all:
-	yacc -vd --debug grammar.y
-	flex --debug -l lex.l
-	gcc -Wall -o lang lex.yy.c y.tab.c -ll -lfl -lm
+	bison -vd --debug grammar.ypp -o grammar.cpp
+	flex --outfile=lex.yy.cpp  --debug -l lex.l
+	g++ -Wall -o lang lex.yy.cpp grammar.cpp -ll -lfl -lm
