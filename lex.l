@@ -1,7 +1,12 @@
 %{
 
 #include <stdio.h>
-#include "y.tab.h"
+#include "grammar.hpp"
+
+extern "C"
+{
+    int yylex(void);
+}
 
 %}
 
@@ -29,7 +34,7 @@ value_number ([0-9]*[.])?[0-9]+
 
 {value_number}          { yylval.nVal = atof(yytext);   return VALUE_NUMBER; }
 {value_string}          { yylval.sVal = strdup(yytext); return VALUE_STRING; }
-{id_name}               { return ID_NAME; }
+{id_name}               { yylval.nVal = atof(yytext);  return ID_NAME; }
 
 ","                     { return ','; }
 ":"                     { return ':'; }
