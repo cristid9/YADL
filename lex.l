@@ -27,7 +27,8 @@ value_number ([0-9]*[.])?[0-9]+
 "for"                   { return FOR; }
 "while"                 { return WHILE; }
 "if"                    { return IF; }
-"class"                 { return CLASS; }
+"else"                  { return ELSE; }
+"declass"               { return CLASS; }
 "print"                 { return PRINT; }
 "sqrt"                  { return SQRT; }
 "pow"                   { return POW; }
