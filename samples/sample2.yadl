@@ -1,0 +1,6 @@
+while (true) {
+    print(sqrt(9));
+}
+
+
+a = 12;

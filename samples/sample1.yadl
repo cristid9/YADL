@@ -1,0 +1,40 @@
+defunc:number foo(var:number arg1) = {
+    var:number i;
+    for ( i = 0; i < 10; i++) {
+        print(1 + 1);
+    }
+
+    if (i) {
+        print(1);
+    } else {
+        print(2);
+    }
+}
+
+defunc:number foo(var:number a) = {
+    a = 1;
+    print(a);
+}
+
+print(1 + 1 * 2);
+
+declass Foo {
+    var:number a;
+
+    defunc:number bar(var:number i) = {
+        print(1);
+    }
+
+    defunc:bool baz(var:string arg1, var:string arg2) = {
+        print(sqrt(4));
+
+
+        if (true) {
+            if (true) {
+                print (11);
+            }
+        } else {
+            print(12);
+        }
+    }
+}

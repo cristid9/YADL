@@ -1,0 +1,6 @@
+const:number a = 1;
+var:number c;
+
+c = 10;
+
+print(c);
