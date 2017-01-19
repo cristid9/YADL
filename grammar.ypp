@@ -36,7 +36,6 @@ map<int, double> symTable;
 %token CLASS
 %token PRINT SQRT POW
 
-%left '('
 %left '+' '-'
 %left '*' '/'
 %left EQ NEQ LT GT LTE GTE AND OR
@@ -265,7 +264,15 @@ init_or_id
                 if (find(declaredVariables.begin(), declaredVariables.end(), $1) 
                     != declaredVariables.end())
                 {
-                    $$ = symTable[$1];
+                    if (!varDeclarationInProgress)
+                    {
+                        $$ = symTable[$1];
+                    }
+                    else
+                    {
+                        cout << "Can't redeclare variable" << endl;
+                    }
+                
                 }
                 else
                 {
